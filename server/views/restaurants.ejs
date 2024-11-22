@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Guide - Restaurants</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/scripts/header.js" defer></script>
+</head>
+<body>
+    <!-- Bangkok Hero section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Bangkok</h2>
+        </div>
+    </section>
+
+    <!-- Restaurants Section -->
+    <section class="restaurants">
+        <h3>Top Restaurants & Food Stands in Bangkok</h3>
+
+        <!-- Dynamically Rendered Restaurant Cards -->
+        <div id="restaurant-list" class="restaurant-grid">
+            <% restaurantData.forEach(restaurant => { %>
+                <div class="restaurant-item" data-id="<%= restaurant.id %>">
+                    <div onclick="window.location.href='/restaurants/<%= restaurant.id %>'" style="cursor: pointer;">
+                        <img src="<%= restaurant.photo %>" alt="<%= restaurant.name %>">
+                        <h4><%= restaurant.name %></h4>
+                        <p><%= restaurant.address %></p>
+                        <p><%= restaurant.phone %></p>
+                    </div>
+                    <button class="delete-btn" data-id="<%= restaurant.id %>">Delete</button>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+
+    <script src="/scripts/restaurantCards.js" defer></script>
+</body>
+</html>

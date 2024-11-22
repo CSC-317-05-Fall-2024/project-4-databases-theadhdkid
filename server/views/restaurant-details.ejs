@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Guide <%= typeof restaurant !== 'undefined' ? ' - ' + restaurant.name : '' %></title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/restaurant-details-styles.css">
+    <script src="/scripts/header.js" defer></script>
+</head>
+<body>
+    <!-- Bangkok Hero section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Bangkok</h2>
+        </div>
+    </section>
+
+    <!-- Restaurant Details -->
+    <section class="restaurant-details">
+        <div class="details-container">
+            <% if (typeof restaurant !== 'undefined' && restaurant) { %>
+                <img 
+                    class="restaurant-details-img" 
+                    src="<%= restaurant.photo %>" 
+                    alt="<%= restaurant.name %>"
+                    onerror="this.src='/images/default-restaurant.jpg'"
+                >
+                <div class="details-content">
+                    <h1><%= restaurant.name %></h1>
+                    <div class="details-info">
+                        <h2><i class="fas fa-map-marker-alt"></i> <%= restaurant.address %></h2>
+                        <h2><i class="fas fa-phone"></i> <%= restaurant.phone %></h2>
+                    </div>
+
+                    <!-- Reviews Section -->
+                    <div class="reviews-section">
+                        <h2>Reviews</h2>
+                        
+                        <!-- Add Review Form -->
+                        <div class="add-review-form">
+                            <h3>Add a Review</h3>
+                            <form id="review-form" data-restaurant-id="<%= restaurant.id %>">
+                                <div class="rating-input">
+                                    <label>Rating:</label>
+                                    <select name="rating" required>
+                                        <option value="5">⭐⭐⭐⭐⭐ 5 stars</option>
+                                        <option value="4">⭐⭐⭐⭐ 4 stars</option>
+                                        <option value="3">⭐⭐⭐ 3 stars</option>
+                                        <option value="2">⭐⭐ 2 stars</option>
+                                        <option value="1">⭐ 1 star</option>
+                                    </select>
+                                </div>
+                                <div class="review-input">
+                                    <label>Review:</label>
+                                    <textarea name="content" required placeholder="Share your experience..."></textarea>
+                                </div>
+                                <button type="submit" class="submit-review">Submit Review</button>
+                            </form>
+                        </div>
+
+                        <!-- Reviews List -->
+                        <div class="reviews-container">
+                            <% if (reviews && reviews.length > 0) { %>
+                                <% reviews.forEach(review => { %>
+                                    <div class="review-card" data-review-id="<%= review.id %>">
+                                        <div class="review-header">
+                                            <div class="review-rating">
+                                                <% for(let i = 0; i < review.rating; i++) { %>⭐<% } %>
+                                            </div>
+                                            <button class="delete-review" aria-label="Delete review">×</button>
+                                        </div>
+                                        <p class="review-content"><%= review.content %></p>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <p class="no-reviews">No reviews yet. Be the first to review!</p>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <a href="/restaurants" class="back-button">Back to Restaurants</a>
+                </div>
+            <% } else { %>
+                <div class="details-content">
+                    <h1>Restaurant Not Found</h1>
+                    <p>Sorry, we couldn't find the restaurant you're looking for.</p>
+                    <a href="/restaurants" class="back-button">Back to Restaurants</a>
+                </div>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- Add this script for handling reviews -->
+    <script src="/scripts/reviewHandler.js" defer></script>
+</body>
+</html>
